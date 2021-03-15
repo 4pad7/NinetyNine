@@ -9,7 +9,8 @@ import SwiftUI
 
 struct RuleView: View {
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
+            Text("每人手牌為５張\n依序輪流從中間牌庫抽牌後打出牌支\n場上丟出的牌加起來不可超過９９\n超過者則為輸家\n")
             Group {
                 Text("♠️♥️特殊功能牌♦️♣️")
                     .bold()
@@ -19,7 +20,7 @@ struct RuleView: View {
                 Text("10：加10或減10")
                 Text("J：Pass")
                 Text("Q：加20或減20")
-                Text("K：99")
+                Text("K：99\n")
                 Text("♠️♥️其餘牌隻♦️♣️")
                     .bold()
                 Text("其數字為加上的數字大小\n")
