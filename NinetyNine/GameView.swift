@@ -139,7 +139,7 @@ struct GameView: View {
                 }
             }
             ZStack {
-                ForEach(0..<5) { (index) in
+                /*ForEach(0..<5) { (index) in
                     Image("\(player[index].suit)" + "_" + "\(player[index].rank)")
                         .resizable()
                         .frame(width: 62.04, height: 94.52)
@@ -147,7 +147,58 @@ struct GameView: View {
                         .onTapGesture {
                             print("ahhh")
                         }
+                }*/
+                Button(action: {
+                    getCard(selected: 0, backpack: backpack, player: player)
+                    shuffleAfterGet(backpack: backpack)
+                }) {
+                    Image("\(player[0].suit)" + "_" + "\(player[0].rank)")
+                        .resizable()
+                        .frame(width: 62.04, height: 94.52)
                 }
+                    .offset(x: CGFloat(0), y: 0)
+                
+                Button(action: {
+                    getCard(selected: 1, backpack: backpack, player: player)
+                    shuffleAfterGet(backpack: backpack)
+                }) {
+                    Image("\(player[1].suit)" + "_" + "\(player[1].rank)")
+                        .resizable()
+                        .frame(width: 62.04, height: 94.52)
+                }
+                    .offset(x: CGFloat(30), y: 0)
+                
+                Button(action: {
+                    getCard(selected: 2, backpack: backpack, player: player)
+                    shuffleAfterGet(backpack: backpack)
+                }) {
+                    Image("\(player[2].suit)" + "_" + "\(player[2].rank)")
+                        .resizable()
+                        .frame(width: 62.04, height: 94.52)
+                }
+                    .offset(x: CGFloat(60), y: 0)
+                
+                Button(action: {
+                    getCard(selected: 3, backpack: backpack, player: player)
+                    shuffleAfterGet(backpack: backpack)
+                }) {
+                    Image("\(player[3].suit)" + "_" + "\(player[3].rank)")
+                        .resizable()
+                        .frame(width: 62.04, height: 94.52)
+                }
+                    .offset(x: CGFloat(90), y: 0)
+                
+                Button(action: {
+                    getCard(selected: 4, backpack: backpack, player: player)
+                    shuffleAfterGet(backpack: backpack)
+                }) {
+                    Image("\(player[4].suit)" + "_" + "\(player[4].rank)")
+                        .resizable()
+                        .frame(width: 62.04, height: 94.52)
+                }
+                    .offset(x: CGFloat(120), y: 0)
+                
+                
             }
             
         }
@@ -166,6 +217,23 @@ struct GameView: View {
             }
         }
     }
+    
+    //丟牌後拿牌庫的牌 (將丟掉的那張牌跟牌庫做交換)
+    func getCard(selected : Int, backpack : [Card], player : [Card]) {
+        self.player[selected] = backpack[0]
+        
+    }
+    
+    //讓丟出的牌變成牌庫的最後一張牌
+    func shuffleAfterGet(backpack : [Card]) {
+        var tmp = Card(suit: "", rank: "")
+        tmp = backpack[0]
+        for i in 0...30 {
+            self.backpack[i] = backpack[i+1]
+        }
+        self.backpack[31] = tmp
+    }
+    
 }
 
 struct GameView_Previews: PreviewProvider {
