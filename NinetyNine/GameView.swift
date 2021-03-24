@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-
-
 struct GameView: View {
     
     @State private var cards = [
@@ -75,22 +73,6 @@ struct GameView: View {
         Card(suit: "", rank: "", value: 0)
     ]
     
-    @State private var CPUplayer2 = [
-        Card(suit: "", rank: "", value: 0),
-        Card(suit: "", rank: "", value: 0),
-        Card(suit: "", rank: "", value: 0),
-        Card(suit: "", rank: "", value: 0),
-        Card(suit: "", rank: "", value: 0)
-    ]
-    
-    @State private var CPUplayer3 = [
-        Card(suit: "", rank: "", value: 0),
-        Card(suit: "", rank: "", value: 0),
-        Card(suit: "", rank: "", value: 0),
-        Card(suit: "", rank: "", value: 0),
-        Card(suit: "", rank: "", value: 0)
-    ]
-    
     @State private var player = [
         Card(suit: "", rank: "", value: 0),
         Card(suit: "", rank: "", value: 0),
@@ -108,17 +90,20 @@ struct GameView: View {
         Card(suit: "", rank: "", value: 0), Card(suit: "", rank: "", value: 0), Card(suit: "", rank: "", value: 0), Card(suit: "", rank: "", value: 0),
         Card(suit: "", rank: "", value: 0), Card(suit: "", rank: "", value: 0), Card(suit: "", rank: "", value: 0), Card(suit: "", rank: "", value: 0),
         Card(suit: "", rank: "", value: 0), Card(suit: "", rank: "", value: 0), Card(suit: "", rank: "", value: 0), Card(suit: "", rank: "", value: 0),
-        Card(suit: "", rank: "", value: 0), Card(suit: "", rank: "", value: 0), Card(suit: "", rank: "", value: 0), Card(suit: "", rank: "", value: 0)
+        Card(suit: "", rank: "", value: 0), Card(suit: "", rank: "", value: 0), Card(suit: "", rank: "", value: 0), Card(suit: "", rank: "", value: 0),
+        Card(suit: "", rank: "", value: 0), Card(suit: "", rank: "", value: 0), Card(suit: "", rank: "", value: 0), Card(suit: "", rank: "", value: 0),
+        Card(suit: "", rank: "", value: 0), Card(suit: "", rank: "", value: 0), Card(suit: "", rank: "", value: 0), Card(suit: "", rank: "", value: 0), Card(suit: "", rank: "", value: 0), Card(suit: "", rank: "", value: 0)
     ]
     
     //籌碼
     
-    //中間牌堆加起來的點數
-    @State private var num = 0
+    @State private var num = 0  //中間牌堆加起來的點數
     
     var body: some View {
         
         VStack {
+            Text("\(num)")
+            
             ZStack {
                 ForEach(0..<5) { (index) in
                     Image("\(CPUplayer1[index].suit)" + "_" + "\(CPUplayer1[index].rank)")
@@ -128,37 +113,15 @@ struct GameView: View {
                 }
             }
             ZStack {
-                ForEach(0..<5) { (index) in
-                    Image("\(CPUplayer2[index].suit)" + "_" + "\(CPUplayer2[index].rank)")
-                        .resizable()
-                        .frame(width: 62.04, height: 94.52)
-                        .offset(x: CGFloat(30*index), y: 0)
-                }
-            }
-            ZStack {
-                ForEach(0..<5) { (index) in
-                    Image("\(CPUplayer3[index].suit)" + "_" + "\(CPUplayer3[index].rank)")
-                        .resizable()
-                        .frame(width: 62.04, height: 94.52)
-                        .offset(x: CGFloat(30*index), y: 0)
-                }
-            }
-            ZStack {
-                /*ForEach(0..<5) { (index) in
-                    Image("\(player[index].suit)" + "_" + "\(player[index].rank)")
-                        .resizable()
-                        .frame(width: 62.04, height: 94.52)
-                        .offset(x: CGFloat(30*index), y: 0)
-                        .onTapGesture {
-                            print("ahhh")
-                        }
-                }*/
                 Button(action: {
+                    print("\(player[0].rank) + \(player[0].suit)")
+                    //先出牌 判斷牌 再拿牌
+                    judgeCard(selected: 0, player: player, num: num)
                     getCard(selected: 0, backpack: backpack, player: player)
                     shuffleAfterGet(backpack: backpack)
-                    CPUplayCard1(CPUplayer1: CPUplayer1, backpack: backpack)
-                    CPUplayCard2(CPUplayer2: CPUplayer2, backpack: backpack)
-                    CPUplayCard3(CPUplayer3: CPUplayer3, backpack: backpack)
+                    print("\(CPUplayer1[0].rank) + \(CPUplayer1[0].suit)")
+                    CPUplayCard1(CPUplayer1: CPUplayer1, backpack: backpack, num: num)
+                    print("num = \(num)")
                 }) {
                     Image("\(player[0].suit)" + "_" + "\(player[0].rank)")
                         .resizable()
@@ -167,11 +130,14 @@ struct GameView: View {
                     .offset(x: CGFloat(0), y: 0)
                 
                 Button(action: {
+                    print("\(player[1].rank) + \(player[1].suit)")
+                    judgeCard(selected: 1, player: player, num: num)
                     getCard(selected: 1, backpack: backpack, player: player)
                     shuffleAfterGet(backpack: backpack)
-                    CPUplayCard1(CPUplayer1: CPUplayer1, backpack: backpack)
-                    CPUplayCard2(CPUplayer2: CPUplayer2, backpack: backpack)
-                    CPUplayCard3(CPUplayer3: CPUplayer3, backpack: backpack)
+                    print("\(CPUplayer1[0].rank) + \(CPUplayer1[0].suit)")
+                    CPUplayCard1(CPUplayer1: CPUplayer1, backpack: backpack, num: num)
+                    print("num = \(num)")
+                    
                 }) {
                     Image("\(player[1].suit)" + "_" + "\(player[1].rank)")
                         .resizable()
@@ -180,11 +146,13 @@ struct GameView: View {
                     .offset(x: CGFloat(30), y: 0)
                 
                 Button(action: {
+                    print("\(player[2].rank) + \(player[2].suit)")
+                    judgeCard(selected: 2, player: player, num: num)
                     getCard(selected: 2, backpack: backpack, player: player)
                     shuffleAfterGet(backpack: backpack)
-                    CPUplayCard1(CPUplayer1: CPUplayer1, backpack: backpack)
-                    CPUplayCard2(CPUplayer2: CPUplayer2, backpack: backpack)
-                    CPUplayCard3(CPUplayer3: CPUplayer3, backpack: backpack)
+                    print("\(CPUplayer1[0].rank) + \(CPUplayer1[0].suit)")
+                    CPUplayCard1(CPUplayer1: CPUplayer1, backpack: backpack, num: num)
+                    print("num = \(num)")
                 }) {
                     Image("\(player[2].suit)" + "_" + "\(player[2].rank)")
                         .resizable()
@@ -193,11 +161,13 @@ struct GameView: View {
                     .offset(x: CGFloat(60), y: 0)
                 
                 Button(action: {
+                    print("\(player[3].rank) + \(player[3].suit)")
+                    judgeCard(selected: 3, player: player, num: num)
                     getCard(selected: 3, backpack: backpack, player: player)
                     shuffleAfterGet(backpack: backpack)
-                    CPUplayCard1(CPUplayer1: CPUplayer1, backpack: backpack)
-                    CPUplayCard2(CPUplayer2: CPUplayer2, backpack: backpack)
-                    CPUplayCard3(CPUplayer3: CPUplayer3, backpack: backpack)
+                    print("\(CPUplayer1[0].rank) + \(CPUplayer1[0].suit)")
+                    CPUplayCard1(CPUplayer1: CPUplayer1, backpack: backpack, num: num)
+                    print("num = \(num)")
                 }) {
                     Image("\(player[3].suit)" + "_" + "\(player[3].rank)")
                         .resizable()
@@ -206,11 +176,13 @@ struct GameView: View {
                     .offset(x: CGFloat(90), y: 0)
                 
                 Button(action: {
+                    print("\(player[4].rank) + \(player[4].suit)")
+                    judgeCard(selected: 4, player: player, num: num)
                     getCard(selected: 4, backpack: backpack, player: player)
                     shuffleAfterGet(backpack: backpack)
-                    CPUplayCard1(CPUplayer1: CPUplayer1, backpack: backpack)
-                    CPUplayCard2(CPUplayer2: CPUplayer2, backpack: backpack)
-                    CPUplayCard3(CPUplayer3: CPUplayer3, backpack: backpack)
+                    print("\(CPUplayer1[0].rank) + \(CPUplayer1[0].suit)")
+                    CPUplayCard1(CPUplayer1: CPUplayer1, backpack: backpack, num: num)
+                    print("num = \(num)")
                 }) {
                     Image("\(player[4].suit)" + "_" + "\(player[4].rank)")
                         .resizable()
@@ -222,17 +194,14 @@ struct GameView: View {
             }
             
         }
-        
         .onAppear {
             //發牌
             cards.shuffle()
             for i in 0...4 {
-                CPUplayer1[i] = cards[i+31]
-                CPUplayer2[i] = cards[i+36]
-                CPUplayer3[i] = cards[i+41]
-                player[i] = cards[i+46]
+                CPUplayer1[i] = cards[i+42]
+                player[i] = cards[i+47]
             }
-            for i in 0...30 {
+            for i in 0...41 {
                 backpack[i] = cards[i]
             }
         }
@@ -246,56 +215,83 @@ struct GameView: View {
     
     //讓丟出的牌變成牌庫的最後一張牌
     func shuffleAfterGet(backpack : [Card]) {
-        var tmp = Card(suit: "", rank: "", value: 0)
-        tmp = backpack[0]
-        for i in 0...30 {
+        let tmp = backpack[0]
+        for i in 0...40 {
             self.backpack[i] = backpack[i+1]
         }
-        self.backpack[31] = tmp
+        self.backpack[41] = tmp
     }
     
     //換電腦出牌
-    func CPUplayCard1(CPUplayer1 : [Card], backpack : [Card]) {
+    func CPUplayCard1(CPUplayer1 : [Card], backpack : [Card], num : Int) {
+        //黑桃Ａ歸零
+        if (CPUplayer1[0].rank == "A" && CPUplayer1[0].suit == "Spade") {
+            self.num = 0
+        }
+        //４迴轉
+        else if (CPUplayer1[0].rank == "4") {
+            
+        }
+        //５指定
+        else if (CPUplayer1[0].rank == "5") {
+            
+        }
+        //１０加減１０
+        else if (CPUplayer1[0].rank == "10") {
+            if (self.num + 10 > 99) {
+                self.num -= 10
+            }
+            else {
+                self.num += 10
+            }
+        }
+        //Ｊ跳過
+        else if (CPUplayer1[0].rank == "J") {
+            
+        }
+        //Ｑ加減２０
+        else if (CPUplayer1[0].rank == "Q") {
+            if (self.num + 20 > 99) {
+                self.num -= 20
+            }
+            else {
+                self.num += 20
+            }
+        }
+        //Ｋ直接９９
+        else if (CPUplayer1[0].rank == "K") {
+            self.num = 99
+        }
+        //數字即為增加點數
+        else {
+            self.num += CPUplayer1[0].value
+        }
+        
+        //大於９９就爆掉
+        if (self.num>99) {
+            print("CPU lose")
+        }
+        
+        //跟牌庫拿牌～～
         self.CPUplayer1[0] = backpack[0]
         var tmp = Card(suit: "", rank: "", value: 0)
         tmp = backpack[0]
-        for i in 0...30 {
+        for i in 0...40 {
             self.backpack[i] = backpack[i+1]
         }
-        self.backpack[31] = tmp
-    }
-    func CPUplayCard2(CPUplayer2 : [Card], backpack : [Card]) {
-        self.CPUplayer2[0] = backpack[0]
-        var tmp = Card(suit: "", rank: "", value: 0)
-        tmp = backpack[0]
-        for i in 0...30 {
-            self.backpack[i] = backpack[i+1]
-        }
-        self.backpack[31] = tmp
-    }
-    func CPUplayCard3(CPUplayer3 : [Card], backpack : [Card]) {
-        self.CPUplayer3[0] = backpack[0]
-        var tmp = Card(suit: "", rank: "", value: 0)
-        tmp = backpack[0]
-        for i in 0...30 {
-            self.backpack[i] = backpack[i+1]
-        }
-        self.backpack[31] = tmp
+        self.backpack[41] = tmp
+        
     }
     
-    //９９條件判斷
+    //９９ player 條件判斷
     func judgeCard(selected : Int, player : [Card], num : Int) {
-        //大於９９就爆掉
-        if (num>99) {
-            
-        }
         //黑桃Ａ歸零
-        else if (player[selected].rank == "A" && player[selected].suit == "Spade") {
+        if (player[selected].rank == "A" && player[selected].suit == "Spade") {
             self.num = 0
         }
         //４迴轉
         else if (player[selected].rank == "4") {
-            
+           
         }
         //５指定
         else if (player[selected].rank == "5") {
@@ -303,7 +299,12 @@ struct GameView: View {
         }
         //１０加減１０
         else if (player[selected].rank == "10") {
-            
+            if (self.num + 10 > 99) {
+                self.num -= 10
+            }
+            else {
+                self.num += 10
+            }
         }
         //Ｊ跳過
         else if (player[selected].rank == "J") {
@@ -311,7 +312,12 @@ struct GameView: View {
         }
         //Ｑ加減２０
         else if (player[selected].rank == "Q") {
-            
+            if (self.num + 20 > 99) {
+                self.num -= 20
+            }
+            else {
+                self.num += 20
+            }
         }
         //Ｋ直接９９
         else if (player[selected].rank == "K") {
@@ -320,6 +326,11 @@ struct GameView: View {
         //數字即為增加點數
         else {
             self.num += player[selected].value
+        }
+        
+        //大於９９就爆掉
+        if (self.num>99) {
+            print("player lose")
         }
     }
     
