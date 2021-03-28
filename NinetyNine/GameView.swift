@@ -98,114 +98,225 @@ struct GameView: View {
     //籌碼
     
     @State private var num = 0  //中間牌堆加起來的點數
+    @State private var imgMessage = "cat1" //  被選到哪張牌
+    @State private var moveDistance1 : CGFloat = 0
+    @State private var moveDistance2 : CGFloat = 0
+    @State private var moveDistance3 : CGFloat = 0
+    @State private var moveDistance4 : CGFloat = 0
+    @State private var moveDistance5 : CGFloat = 0
+    @State private var CPUDistance : CGFloat = 0
     
     var body: some View {
-        
-        VStack {
-            Text("\(num)")
+        ZStack {
             
-            ZStack {
-                ForEach(0..<5) { (index) in
-                    Image("\(CPUplayer1[index].suit)" + "_" + "\(CPUplayer1[index].rank)")
-                        .resizable()
-                        .frame(width: 62.04, height: 94.52)
-                        .offset(x: CGFloat(30*index), y: 0)
-                }
-            }
-            ZStack {
-                Button(action: {
-                    print("\(player[0].rank) + \(player[0].suit)")
-                    //先出牌 判斷牌 再拿牌
-                    judgeCard(selected: 0, player: player, num: num)
-                    getCard(selected: 0, backpack: backpack, player: player)
-                    shuffleAfterGet(backpack: backpack)
-                    print("\(CPUplayer1[0].rank) + \(CPUplayer1[0].suit)")
-                    CPUplayCard1(CPUplayer1: CPUplayer1, backpack: backpack, num: num)
-                    print("num = \(num)")
-                }) {
-                    Image("\(player[0].suit)" + "_" + "\(player[0].rank)")
-                        .resizable()
-                        .frame(width: 62.04, height: 94.52)
-                }
-                    .offset(x: CGFloat(0), y: 0)
+            Color.yellow.edgesIgnoringSafeArea(.all)
+            
+            VStack {
                 
-                Button(action: {
-                    print("\(player[1].rank) + \(player[1].suit)")
-                    judgeCard(selected: 1, player: player, num: num)
-                    getCard(selected: 1, backpack: backpack, player: player)
-                    shuffleAfterGet(backpack: backpack)
-                    print("\(CPUplayer1[0].rank) + \(CPUplayer1[0].suit)")
-                    CPUplayCard1(CPUplayer1: CPUplayer1, backpack: backpack, num: num)
-                    print("num = \(num)")
+                ZStack {
+                    Image("cat1")
+                        .resizable()
+                        .frame(width: 62.04, height: 94.52)
+                        .cornerRadius(7)
+                        .offset(x: -55, y: CPUDistance)
+                        
+                    Image("cat1")
+                        .resizable()
+                        .frame(width: 62.04, height: 94.52)
+                        .cornerRadius(7)
+                        .offset(x: -25, y: 0)
+                    Image("cat1")
+                        .resizable()
+                        .frame(width: 62.04, height: 94.52)
+                        .cornerRadius(7)
+                        .offset(x: 5, y: 0)
+                    Image("cat1")
+                        .resizable()
+                        .frame(width: 62.04, height: 94.52)
+                        .cornerRadius(7)
+                        .offset(x: 35, y: 0)
+                    Image("cat1")
+                        .resizable()
+                        .frame(width: 62.04, height: 94.52)
+                        .cornerRadius(7)
+                        .offset(x: 65, y: 0)
+                }
+                
+                Text("\n")
+                
+                HStack {
+                    Image(imgMessage)
+                        .resizable()
+                        .frame(width: 62.04, height: 94.52)
+                        .cornerRadius(7)
                     
-                }) {
-                    Image("\(player[1].suit)" + "_" + "\(player[1].rank)")
-                        .resizable()
-                        .frame(width: 62.04, height: 94.52)
+                    Text("  \(num)")
+                        .font(.system(size: 25))
+                        .bold()
+                        .foregroundColor(.red)
                 }
-                    .offset(x: CGFloat(30), y: 0)
                 
-                Button(action: {
-                    print("\(player[2].rank) + \(player[2].suit)")
-                    judgeCard(selected: 2, player: player, num: num)
-                    getCard(selected: 2, backpack: backpack, player: player)
-                    shuffleAfterGet(backpack: backpack)
-                    print("\(CPUplayer1[0].rank) + \(CPUplayer1[0].suit)")
-                    CPUplayCard1(CPUplayer1: CPUplayer1, backpack: backpack, num: num)
-                    print("num = \(num)")
-                }) {
-                    Image("\(player[2].suit)" + "_" + "\(player[2].rank)")
-                        .resizable()
-                        .frame(width: 62.04, height: 94.52)
+                Text("\n")
+                
+                ZStack {
+                    Button(action: {
+                        CPUDistance = 0
+                        moveDistance1 -= 20
+                        //先出牌 判斷牌 再拿牌
+                        judgeCard(selected: 0, player: player, num: num, imgMessage: imgMessage)
+                        print("num = \(num)")
+                        getCard(selected: 0, backpack: backpack, player: player)
+                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+0.5) {
+                            print("\(player[0].rank) + \(player[0].suit)")
+                            moveDistance1 = 0
+                        }
+                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+0.5) {
+                            shuffleAfterGet(backpack: backpack)
+                            print("\(CPUplayer1[0].rank) + \(CPUplayer1[0].suit)")
+                            CPUDistance = 20
+                        }
+                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+1) {
+                            CPUplayCard1(CPUplayer1: CPUplayer1, backpack: backpack, num: num)
+                            CPUDistance = 0
+                        }
+                    }) {
+                        Image("\(player[0].suit)" + "_" + "\(player[0].rank)")
+                            .resizable()
+                            .frame(width: 62.04, height: 94.52)
+                            .cornerRadius(7)
+                    }
+                    .offset(x: -55 + CGFloat(0), y: moveDistance1)
+                        
+                    
+                    Button(action: {
+                        CPUDistance = 0
+                        moveDistance2 -= 20
+                        //先出牌 判斷牌 再拿牌
+                        judgeCard(selected: 1, player: player, num: num, imgMessage: imgMessage)
+                        print("num = \(num)")
+                        getCard(selected: 1, backpack: backpack, player: player)
+                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+0.5) {
+                            print("\(player[1].rank) + \(player[1].suit)")
+                            moveDistance2 = 0
+                        }
+                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+0.5) {
+                            shuffleAfterGet(backpack: backpack)
+                            print("\(CPUplayer1[0].rank) + \(CPUplayer1[0].suit)")
+                            CPUDistance = 20
+                        }
+                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+1) {
+                            CPUplayCard1(CPUplayer1: CPUplayer1, backpack: backpack, num: num)
+                            CPUDistance = 0
+                        }
+                    }) {
+                        Image("\(player[1].suit)" + "_" + "\(player[1].rank)")
+                            .resizable()
+                            .frame(width: 62.04, height: 94.52)
+                            .cornerRadius(7)
+                    }
+                    .offset(x: -55 + CGFloat(30), y: moveDistance2)
+                    
+                    Button(action: {
+                        CPUDistance = 0
+                        moveDistance3 -= 20
+                        //先出牌 判斷牌 再拿牌
+                        judgeCard(selected: 2, player: player, num: num, imgMessage: imgMessage)
+                        print("num = \(num)")
+                        getCard(selected: 2, backpack: backpack, player: player)
+                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+0.5) {
+                            print("\(player[2].rank) + \(player[2].suit)")
+                            moveDistance3 = 0
+                        }
+                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+0.5) {
+                            shuffleAfterGet(backpack: backpack)
+                            print("\(CPUplayer1[0].rank) + \(CPUplayer1[0].suit)")
+                            CPUDistance = 20
+                        }
+                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+1) {
+                            CPUplayCard1(CPUplayer1: CPUplayer1, backpack: backpack, num: num)
+                            CPUDistance = 0
+                        }
+                    }) {
+                        Image("\(player[2].suit)" + "_" + "\(player[2].rank)")
+                            .resizable()
+                            .frame(width: 62.04, height: 94.52)
+                            .cornerRadius(7)
+                    }
+                    .offset(x: -55 + CGFloat(60), y: moveDistance3)
+                    
+                    Button(action: {
+                        CPUDistance = 0
+                        moveDistance4 -= 20
+                        //先出牌 判斷牌 再拿牌
+                        judgeCard(selected: 3, player: player, num: num, imgMessage: imgMessage)
+                        print("num = \(num)")
+                        getCard(selected: 3, backpack: backpack, player: player)
+                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+0.5) {
+                            print("\(player[3].rank) + \(player[3].suit)")
+                            moveDistance4 = 0
+                        }
+                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+0.5) {
+                            shuffleAfterGet(backpack: backpack)
+                            print("\(CPUplayer1[0].rank) + \(CPUplayer1[0].suit)")
+                            CPUDistance = 20
+                        }
+                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+1) {
+                            CPUplayCard1(CPUplayer1: CPUplayer1, backpack: backpack, num: num)
+                            CPUDistance = 0
+                        }
+                    }) {
+                        Image("\(player[3].suit)" + "_" + "\(player[3].rank)")
+                            .resizable()
+                            .frame(width: 62.04, height: 94.52)
+                            .cornerRadius(7)
+                    }
+                    .offset(x: -55 + CGFloat(90), y: moveDistance4)
+                    
+                    Button(action: {
+                        CPUDistance = 0
+                        moveDistance5 -= 20
+                        //先出牌 判斷牌 再拿牌
+                        judgeCard(selected: 4, player: player, num: num, imgMessage: imgMessage)
+                        print("num = \(num)")
+                        getCard(selected: 4, backpack: backpack, player: player)
+                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+0.5) {
+                            print("\(player[4].rank) + \(player[4].suit)")
+                            moveDistance5 = 0
+                        }
+                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+0.5) {
+                            shuffleAfterGet(backpack: backpack)
+                            print("\(CPUplayer1[0].rank) + \(CPUplayer1[0].suit)")
+                            CPUDistance = 20
+                        }
+                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+1) {
+                            CPUplayCard1(CPUplayer1: CPUplayer1, backpack: backpack, num: num)
+                            CPUDistance = 0
+                        }
+                    }) {
+                        Image("\(player[4].suit)" + "_" + "\(player[4].rank)")
+                            .resizable()
+                            .frame(width: 62.04, height: 94.52)
+                            .cornerRadius(7)
+                    }
+                    .offset(x: -55 + CGFloat(120), y: moveDistance5)
+                    
                 }
-                    .offset(x: CGFloat(60), y: 0)
-                
-                Button(action: {
-                    print("\(player[3].rank) + \(player[3].suit)")
-                    judgeCard(selected: 3, player: player, num: num)
-                    getCard(selected: 3, backpack: backpack, player: player)
-                    shuffleAfterGet(backpack: backpack)
-                    print("\(CPUplayer1[0].rank) + \(CPUplayer1[0].suit)")
-                    CPUplayCard1(CPUplayer1: CPUplayer1, backpack: backpack, num: num)
-                    print("num = \(num)")
-                }) {
-                    Image("\(player[3].suit)" + "_" + "\(player[3].rank)")
-                        .resizable()
-                        .frame(width: 62.04, height: 94.52)
-                }
-                    .offset(x: CGFloat(90), y: 0)
-                
-                Button(action: {
-                    print("\(player[4].rank) + \(player[4].suit)")
-                    judgeCard(selected: 4, player: player, num: num)
-                    getCard(selected: 4, backpack: backpack, player: player)
-                    shuffleAfterGet(backpack: backpack)
-                    print("\(CPUplayer1[0].rank) + \(CPUplayer1[0].suit)")
-                    CPUplayCard1(CPUplayer1: CPUplayer1, backpack: backpack, num: num)
-                    print("num = \(num)")
-                }) {
-                    Image("\(player[4].suit)" + "_" + "\(player[4].rank)")
-                        .resizable()
-                        .frame(width: 62.04, height: 94.52)
-                }
-                    .offset(x: CGFloat(120), y: 0)
-                
                 
             }
-            
-        }
-        .onAppear {
-            //發牌
-            cards.shuffle()
-            for i in 0...4 {
-                CPUplayer1[i] = cards[i+42]
-                player[i] = cards[i+47]
-            }
-            for i in 0...41 {
-                backpack[i] = cards[i]
+            .onAppear {
+                //發牌
+                cards.shuffle()
+                for i in 0...4 {
+                    CPUplayer1[i] = cards[i+42]
+                    player[i] = cards[i+47]
+                }
+                for i in 0...41 {
+                    backpack[i] = cards[i]
+                }
             }
         }
     }
+    
     
     //丟牌後拿牌庫的牌 (將丟掉的那張牌跟牌庫做交換)
     func getCard(selected : Int, backpack : [Card], player : [Card]) {
@@ -224,6 +335,7 @@ struct GameView: View {
     
     //換電腦出牌
     func CPUplayCard1(CPUplayer1 : [Card], backpack : [Card], num : Int) {
+        self.imgMessage = "\(CPUplayer1[0].suit)" + "_" + "\(CPUplayer1[0].rank)"
         //黑桃Ａ歸零
         if (CPUplayer1[0].rank == "A" && CPUplayer1[0].suit == "Spade") {
             self.num = 0
@@ -284,14 +396,14 @@ struct GameView: View {
     }
     
     //９９ player 條件判斷
-    func judgeCard(selected : Int, player : [Card], num : Int) {
+    func judgeCard(selected : Int, player : [Card], num : Int, imgMessage : String) {
+        self.imgMessage = "\(player[selected].suit)" + "_" + "\(player[selected].rank)"
         //黑桃Ａ歸零
         if (player[selected].rank == "A" && player[selected].suit == "Spade") {
             self.num = 0
         }
         //４迴轉
         else if (player[selected].rank == "4") {
-           
         }
         //５指定
         else if (player[selected].rank == "5") {

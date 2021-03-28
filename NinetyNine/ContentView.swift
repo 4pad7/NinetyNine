@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    
+
     @State private var judgeBtn : Bool = true
     @State private var showRule : Bool = false
     
