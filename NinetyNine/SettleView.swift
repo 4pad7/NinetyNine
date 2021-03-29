@@ -22,6 +22,8 @@ struct SettleView: View {
         }
         else{
             ZStack {
+                Image(Coin.winOrNot)
+                    .opacity(0.5)
                 VStack {
                     Group {     //結果訊息
                         Text(Coin.judgeMessage)

@@ -14,7 +14,7 @@ struct CardbackView: View {
     
     var body: some View {
         if(returnPlay == true) {
-            ContentView()
+            GameView()
         }
         else {
             ZStack {
@@ -27,7 +27,6 @@ struct CardbackView: View {
                     HStack {
                         Button(action: {
                             Coin.backImgMessage = "cat1"
-                            returnPlay = true
                         }) {
                             Image("cat1")
                                 .resizable()
@@ -37,7 +36,6 @@ struct CardbackView: View {
                         
                         Button(action: {
                             Coin.backImgMessage = "cat2"
-                            returnPlay = true
                         }) {
                             Image("cat2")
                                 .resizable()
@@ -47,7 +45,6 @@ struct CardbackView: View {
                         
                         Button(action: {
                             Coin.backImgMessage = "cat3"
-                            returnPlay = true
                         }) {
                             Image("cat3")
                                 .resizable()
@@ -55,6 +52,19 @@ struct CardbackView: View {
                                 .cornerRadius(7)
                         }
                     }
+                    
+                    Button(action: {
+                        returnPlay = true
+                    }, label: {
+                        Text("確定好ㄌ!開始遊戲")
+                            .bold()
+                            .font(.system(size: 13))
+                            .padding(3)
+                            .foregroundColor(.blue)
+                            .background(Color.white)
+                            .cornerRadius(10)
+                            .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.white))
+                    })
                 }
             }
         }

@@ -400,6 +400,7 @@ struct GameView: View {
             self.num = 0
             someBodyLose = true
             Coin.judgeMessage = "恭喜你贏了這局！籌碼+100\n"
+            Coin.winOrNot = "win"
         }
         
         //跟牌庫拿牌～～
@@ -467,6 +468,7 @@ struct GameView: View {
             self.num = 0
             someBodyLose = true
             Coin.judgeMessage = "真可惜！你輸了此局！籌碼-100"
+            Coin.winOrNot = "lose"
         }
     }
     

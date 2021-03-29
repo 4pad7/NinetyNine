@@ -12,6 +12,7 @@ class Coin: ObservableObject {
     @Published var CPUCoin = 1000
     @Published var judgeMessage = ""
     @Published var backImgMessage = "cat1"
+    @Published var winOrNot = ""
 }
 
 struct ContentView: View {
@@ -20,12 +21,13 @@ struct ContentView: View {
     @StateObject var CPUCoin = Coin()
     @StateObject var judgeMessage = Coin()
     @StateObject var backImgMessage = Coin()
+    @StateObject var winOrNot = Coin()
     @State private var judgeBtn = 0
     @State private var showRule : Bool = false
     
     var body: some View {
         if(judgeBtn == 1) {
-            GameView().environmentObject(playerCoin).environmentObject(CPUCoin).environmentObject(judgeMessage).environmentObject(backImgMessage)
+            GameView().environmentObject(playerCoin).environmentObject(CPUCoin).environmentObject(judgeMessage).environmentObject(backImgMessage).environmentObject(winOrNot)
         }
         else if(judgeBtn == 2) {
             CardbackView().environmentObject(backImgMessage)
