@@ -96,9 +96,12 @@ struct GameView: View {
     ]
     
     //籌碼
+    @EnvironmentObject var Coin: Coin
+    
+    @State private var someBodyLose = false
     
     @State private var num = 0  //中間牌堆加起來的點數
-    @State private var imgMessage = "cat1" //  被選到哪張牌
+    @State private var imgMessage = "" //  被選到哪張牌
     @State private var moveDistance1 : CGFloat = 0
     @State private var moveDistance2 : CGFloat = 0
     @State private var moveDistance3 : CGFloat = 0
@@ -112,33 +115,39 @@ struct GameView: View {
             Color.yellow.edgesIgnoringSafeArea(.all)
             
             VStack {
+                Text("電腦籌碼：\(Coin.CPUCoin)")
                 
                 ZStack {
-                    Image("cat1")
+                    Image(Coin.backImgMessage)
                         .resizable()
                         .frame(width: 62.04, height: 94.52)
                         .cornerRadius(7)
+                        .overlay(RoundedRectangle(cornerRadius: 7).stroke(Color.white, lineWidth: 1))
                         .offset(x: -55, y: CPUDistance)
                         
-                    Image("cat1")
+                    Image(Coin.backImgMessage)
                         .resizable()
                         .frame(width: 62.04, height: 94.52)
                         .cornerRadius(7)
+                        .overlay(RoundedRectangle(cornerRadius: 7).stroke(Color.white, lineWidth: 1))
                         .offset(x: -25, y: 0)
-                    Image("cat1")
+                    Image(Coin.backImgMessage)
                         .resizable()
                         .frame(width: 62.04, height: 94.52)
                         .cornerRadius(7)
+                        .overlay(RoundedRectangle(cornerRadius: 7).stroke(Color.white, lineWidth: 1))
                         .offset(x: 5, y: 0)
-                    Image("cat1")
+                    Image(Coin.backImgMessage)
                         .resizable()
                         .frame(width: 62.04, height: 94.52)
                         .cornerRadius(7)
+                        .overlay(RoundedRectangle(cornerRadius: 7).stroke(Color.white, lineWidth: 1))
                         .offset(x: 35, y: 0)
-                    Image("cat1")
+                    Image(Coin.backImgMessage)
                         .resizable()
                         .frame(width: 62.04, height: 94.52)
                         .cornerRadius(7)
+                        .overlay(RoundedRectangle(cornerRadius: 7).stroke(Color.white, lineWidth: 1))
                         .offset(x: 65, y: 0)
                 }
                 
@@ -302,6 +311,8 @@ struct GameView: View {
                     
                 }
                 
+                Text("玩家籌碼：\(Coin.playerCoin)")
+                
             }
             .onAppear {
                 //發牌
@@ -315,6 +326,7 @@ struct GameView: View {
                 }
             }
         }
+        .fullScreenCover(isPresented: $someBodyLose, content: SettleView.init)
     }
     
     
@@ -381,7 +393,13 @@ struct GameView: View {
         
         //大於９９就爆掉
         if (self.num>99) {
+            Coin.CPUCoin -= 100
+            Coin.playerCoin += 100
             print("CPU lose")
+            print(Coin.CPUCoin)
+            self.num = 0
+            someBodyLose = true
+            Coin.judgeMessage = "恭喜你贏了這局！籌碼+100\n"
         }
         
         //跟牌庫拿牌～～
@@ -442,7 +460,13 @@ struct GameView: View {
         
         //大於９９就爆掉
         if (self.num>99) {
+            Coin.playerCoin -= 100
+            Coin.CPUCoin += 100
             print("player lose")
+            print(Coin.playerCoin)
+            self.num = 0
+            someBodyLose = true
+            Coin.judgeMessage = "真可惜！你輸了此局！籌碼-100"
         }
     }
     
