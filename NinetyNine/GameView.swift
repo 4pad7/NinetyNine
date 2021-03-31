@@ -99,6 +99,7 @@ struct GameView: View {
     @EnvironmentObject var Coin: Coin
     
     @State private var someBodyLose = false
+    @State private var gameOverOrNot = false
     
     @State private var num = 0  //中間牌堆加起來的點數
     @State private var imgMessage = "" //  被選到哪張牌
@@ -112,10 +113,13 @@ struct GameView: View {
     var body: some View {
         ZStack {
             
-            Color.yellow.edgesIgnoringSafeArea(.all)
+            Image("playBack2")
+                .opacity(0.8)
             
             VStack {
                 Text("電腦籌碼：\(Coin.CPUCoin)")
+                    .foregroundColor(.white)
+                    .bold()
                 
                 ZStack {
                     Image(Coin.backImgMessage)
@@ -159,10 +163,10 @@ struct GameView: View {
                         .frame(width: 62.04, height: 94.52)
                         .cornerRadius(7)
                     
-                    Text("  \(num)")
-                        .font(.system(size: 25))
+                    Text("   \(num)")
+                        .font(.system(size: 45))
                         .bold()
-                        .foregroundColor(.red)
+                        .foregroundColor(.pink)
                 }
                 
                 Text("\n")
@@ -309,9 +313,15 @@ struct GameView: View {
                     }
                     .offset(x: -55 + CGFloat(120), y: moveDistance5)
                     
+                    EmptyView()
+                        .fullScreenCover(isPresented: $gameOverOrNot, content: GameOverView.init)
+                    EmptyView()
+                        .fullScreenCover(isPresented: $someBodyLose, content: SettleView.init)
+                   
                 }
                 
                 Text("玩家籌碼：\(Coin.playerCoin)")
+                    .bold()
                 
             }
             .onAppear {
@@ -326,7 +336,6 @@ struct GameView: View {
                 }
             }
         }
-        .fullScreenCover(isPresented: $someBodyLose, content: SettleView.init)
     }
     
     
@@ -403,6 +412,11 @@ struct GameView: View {
             Coin.winOrNot = "win"
         }
         
+        if(Coin.CPUCoin<0||Coin.playerCoin<0) {
+            gameOverOrNot = true
+            someBodyLose = false
+        }
+        
         //跟牌庫拿牌～～
         self.CPUplayer1[0] = backpack[0]
         var tmp = Card(suit: "", rank: "", value: 0)
@@ -470,6 +484,12 @@ struct GameView: View {
             Coin.judgeMessage = "真可惜！你輸了此局！籌碼-100"
             Coin.winOrNot = "lose"
         }
+        
+        if(Coin.CPUCoin<0||Coin.playerCoin<0) {
+            gameOverOrNot = true
+            someBodyLose = false
+        }
+        
     }
     
 }

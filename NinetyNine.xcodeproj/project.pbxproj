@@ -16,6 +16,7 @@
 		43BB4A9125FB36200013444B /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BB4A9025FB36200013444B /* Card.swift */; };
 		43CFCE822611AF4C00D32263 /* SettleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43CFCE812611AF4C00D32263 /* SettleView.swift */; };
 		43CFCE852611C03A00D32263 /* CardbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43CFCE842611C03A00D32263 /* CardbackView.swift */; };
+		43CFCE8C2614544100D32263 /* GameOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43CFCE8B2614544100D32263 /* GameOverView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		43BB4A9025FB36200013444B /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		43CFCE812611AF4C00D32263 /* SettleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettleView.swift; sourceTree = "<group>"; };
 		43CFCE842611C03A00D32263 /* CardbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardbackView.swift; sourceTree = "<group>"; };
+		43CFCE8B2614544100D32263 /* GameOverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +71,7 @@
 				43BB4A8425F8B8DC0013444B /* GameView.swift */,
 				43CFCE812611AF4C00D32263 /* SettleView.swift */,
 				43BB4A7625F8B8BE0013444B /* ContentView.swift */,
+				43CFCE8B2614544100D32263 /* GameOverView.swift */,
 				43BB4A7825F8B8C10013444B /* Assets.xcassets */,
 				43BB4A7D25F8B8C10013444B /* Info.plist */,
 				43BB4A7A25F8B8C10013444B /* Preview Content */,
@@ -159,6 +162,7 @@
 				43BB4A9125FB36200013444B /* Card.swift in Sources */,
 				43BB4A8525F8B8DC0013444B /* GameView.swift in Sources */,
 				43BB4A7525F8B8BE0013444B /* NinetyNineApp.swift in Sources */,
+				43CFCE8C2614544100D32263 /* GameOverView.swift in Sources */,
 				43CFCE852611C03A00D32263 /* CardbackView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

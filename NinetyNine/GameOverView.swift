@@ -1,51 +1,57 @@
 //
-//  SettleView.swift
+//  GameOverView.swift
 //  NinetyNine
 //
-//  Created by User14 on 2021/3/29.
+//  Created by User14 on 2021/3/31.
 //
 
 import SwiftUI
 
-struct SettleView: View {
+struct GameOverView: View {
     
-    //籌碼
     @EnvironmentObject var Coin: Coin
-    @State private var returnHome = 0 //回主畫面或繼續ＰＫ
+    @State private var returnHome = false
     
     var body: some View {
-        if(returnHome == 1) {
-            GameView()
-        }
-        else if(returnHome == 2){
+        if(returnHome == true) {
             ContentView()
         }
-        else{
-            ZStack {
-                Image(Coin.winOrNot)
-                    .opacity(0.5)
-                VStack {
-                    Group {     //結果訊息
-                        Text(Coin.judgeMessage)
+        else {
+            if(Coin.winOrNot == "win") {
+                ZStack {
+                    Image("endWin")
+                        .opacity(0.7)
+                    VStack {
+                        Text("恭喜你把電腦搞到破產！")
                             .bold()
-                            .font(.system(size: 20))
-                        Text("\n\n\n電腦籌碼：\(Coin.CPUCoin)")
-                        Text("玩家籌碼：\(Coin.playerCoin)")
-                    }
-                    HStack {
+                        Text("你是好棒棒大贏家🥳🥳🥳🥳🥳")
+                            .bold()
+                        
                         Button(action: {
-                            returnHome = 1
+                            returnHome = true
                         }, label: {
-                            Text("繼續ＰＫ")
+                            Text("回到主畫面")
                                 .padding(3)
                                 .foregroundColor(.blue)
                                 .background(Color.white)
                                 .cornerRadius(10)
                                 .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.white))
                         })
+                    }
+                }
+            }
+            else {
+                ZStack {
+                    Image("endLose")
+                        .opacity(0.7)
+                    VStack {
+                        Text("真可惜！你竟然輸給我寫的電腦😨")
+                            .bold()
+                        Text("沒關係，再重新來一次吧！")
+                            .bold()
                         
                         Button(action: {
-                            returnHome = 2
+                            returnHome = true
                         }, label: {
                             Text("回到主畫面")
                                 .padding(3)
@@ -61,9 +67,8 @@ struct SettleView: View {
     }
 }
 
-
-struct SettleView_Previews: PreviewProvider {
+struct GameOverView_Previews: PreviewProvider {
     static var previews: some View {
-        SettleView()
+        GameOverView()
     }
 }

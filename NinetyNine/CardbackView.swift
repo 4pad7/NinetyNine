@@ -11,6 +11,9 @@ struct CardbackView: View {
     
     @EnvironmentObject var Coin: Coin
     @State private var returnPlay = false
+    @State private var catt = 0.5
+    @State private var cattt = 0.5
+    @State private var catttt = 0.5
     
     var body: some View {
         if(returnPlay == true) {
@@ -27,29 +30,41 @@ struct CardbackView: View {
                     HStack {
                         Button(action: {
                             Coin.backImgMessage = "cat1"
+                            catt = 1.0
+                            cattt = 0.5
+                            catttt = 0.5
                         }) {
                             Image("cat1")
                                 .resizable()
                                 .frame(width: 62.04, height: 94.52)
                                 .cornerRadius(7)
+                                .opacity(catt)
                         }
                         
                         Button(action: {
                             Coin.backImgMessage = "cat2"
+                            catt = 0.5
+                            cattt = 1.0
+                            catttt = 0.5
                         }) {
                             Image("cat2")
                                 .resizable()
                                 .frame(width: 62.04, height: 94.52)
                                 .cornerRadius(7)
+                                .opacity(cattt)
                         }
                         
                         Button(action: {
                             Coin.backImgMessage = "cat3"
+                            catt = 0.5
+                            cattt = 0.5
+                            catttt = 1.0
                         }) {
                             Image("cat3")
                                 .resizable()
                                 .frame(width: 62.04, height: 94.52)
                                 .cornerRadius(7)
+                                .opacity(catttt)
                         }
                     }
                     
